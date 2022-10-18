@@ -44,7 +44,7 @@ export const CreateUserForm = () => {
           <FormLabel>Email</FormLabel>
           <Input
             type="email"
-            {...register('email', { required: 'Job is required' })}
+            {...register('email', { required: 'Email is required' })}
           />
           <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
         </FormControl>

@@ -1,15 +1,19 @@
 /** Hooks */
 import { useGetUsers } from './hooks/useGetUsers';
+import { useState } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 /** Components */
-import { Button, Center, Flex, Grid, Spinner } from '@chakra-ui/react';
+import { Button, Center, Flex, Grid, Heading, Spinner } from '@chakra-ui/react';
+import { NavigationControls } from './components/NavigationControls';
 import { UserCard } from './components/UserCard';
-import { Outlet, useNavigate } from 'react-router-dom';
 
 import './App.css';
 
 function App() {
-  const { data: users, isFetching } = useGetUsers();
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const { data: users, isFetching } = useGetUsers(currentPage);
 
   const navigate = useNavigate();
 
@@ -28,6 +32,7 @@ function App() {
 
   return (
     <Flex gap={4} direction={{ base: 'column', md: 'row' }}>
+      <Heading>Page {currentPage}</Heading>
       <Flex direction="column" gap={4} maxW="70%" flexGrow={1}>
         <Button
           colorScheme="blue"
@@ -54,6 +59,10 @@ function App() {
               />
             ))}
         </Grid>
+        <NavigationControls
+          currentPage={currentPage}
+          setNextPage={setCurrentPage}
+        />
       </Flex>
       <Outlet />
     </Flex>
